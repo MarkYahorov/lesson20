@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">lesson20</string>
+    <string name="enter_your_login">Enter your login</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="birthday">Birthday</string>
+    <string name="logout">Logout</string>
+    <string name="note">Note</string>
+    <string name="isloading">is Loading</string>
+</resources>

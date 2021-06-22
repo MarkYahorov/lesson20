@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileActivity">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/email_text"
+        style="@style/all_text_in_profile_activity_land_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/email"
+        app:layout_constraintBottom_toTopOf="@id/first_name_text"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/current_email"
+        style="@style/all_text_in_profile_activity_land_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/current_first_name"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/first_name_text"
+        style="@style/all_text_in_profile_activity_land_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/first_name"
+        app:layout_constraintBottom_toTopOf="@+id/last_name_text"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/email_text" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/current_first_name"
+        style="@style/all_text_in_profile_activity_land_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/current_last_name"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/current_email" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/last_name_text"
+        style="@style/all_text_in_profile_activity_land_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/last_name"
+        app:layout_constraintBottom_toTopOf="@+id/birthday_text"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/first_name_text" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/current_last_name"
+        style="@style/all_text_in_profile_activity_land_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintBottom_toTopOf="@id/current_birthday"
+        app:layout_constraintTop_toBottomOf="@+id/current_first_name" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/birthday_text"
+        style="@style/all_text_in_profile_activity_land_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/birthday"
+        app:layout_constraintBottom_toTopOf="@+id/note_text"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/last_name_text" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/current_birthday"
+        style="@style/all_text_in_profile_activity_land_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/current_last_name" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/logout_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/logout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/current_note" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/note_text"
+        style="@style/all_text_in_profile_activity_land_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/note"
+        app:layout_constraintBottom_toTopOf="@+id/current_note"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/birthday_text" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/current_note"
+        style="@style/all_text_in_profile_activity_land_version"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/logout_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/note_text" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="210dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="325dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="text_size">20sp</dimen>
+    <dimen name="margin_text">10dp</dimen>
+    <dimen name="margin_btn_port">20dp</dimen>
+    <dimen name="margin_btn_land">40dp</dimen>
 </resources>

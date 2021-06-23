@@ -14,6 +14,8 @@ import android.widget.*
 import okhttp3.*
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
@@ -22,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var passwordText: EditText
     private lateinit var loginBtn: Button
     private lateinit var threadToServer: ThreadToServer
+    private lateinit var profileThread: ProfileThreadToServer
     private lateinit var progress: ProgressDialog
     private lateinit var errorText: TextView
 
@@ -70,7 +73,10 @@ class MainActivity : AppCompatActivity() {
         startThread(okHttpClient, body)
     }
 
-    private fun startThread(okHttpClient: OkHttpClient, body: RequestBody) {
+    private fun startThread(
+        okHttpClient: OkHttpClient,
+        body: RequestBody
+    ) {
         threadToServer = ThreadToServer(okHttpClient, body, action = {
             Handler(Looper.getMainLooper()).post {
                 if (it?.substring(0, 5).equals(ERROR)) {
@@ -80,10 +86,21 @@ class MainActivity : AppCompatActivity() {
                     passwordText.setText("")
                     progress.dismiss()
                 } else {
-                    val intent = Intent(this, ProfileActivity::class.java)
-                    intent.putExtra(ProfileActivity.THIS_TOKEN, it)
-                    intent.putExtra(ProfileActivity.THIS_EMAIL, loginText.text.toString())
-                    startActivity(intent)
+                    val bodyToSecondThread = JSONObject()
+                        .put("token", it)
+                        .toString().toRequestBody()
+                    profileThread = ProfileThreadToServer(
+                        okHttpClient,
+                        bodyToSecondThread,
+                        actionSetTextInAllFields = {
+                            setInShared(ProfileActivity.EMAIL, loginText.text.toString())
+                            setInShared(ProfileActivity.FIRST_NAME, it!![0])
+                            setInShared(ProfileActivity.LAST_NAME, it[1])
+                            setInShared(ProfileActivity.BIRTH_DATE, it[2])
+                            setInShared(ProfileActivity.NOTE, it[3])
+                        })
+                    profileThread.executeOnExecutor(Executors.newFixedThreadPool(2))
+                    startActivity(Intent(this, ProfileActivity::class.java))
                     progress.dismiss()
                 }
             }
@@ -94,6 +111,10 @@ class MainActivity : AppCompatActivity() {
     private fun createJSON() = JSONObject()
         .put(EMAIL, loginText.text.toString())
         .put(PASSWORD, passwordText.text.toString())
+        .toString()
+
+    private fun createJSONToSecondThread() = JSONObject()
+        .put("token", intent.getStringExtra(ProfileActivity.THIS_TOKEN))
         .toString()
 
     private fun createProgressDialog() {
@@ -130,5 +151,15 @@ class MainActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
             }
         })
+    }
+
+    private fun setInShared(key: String, putString: String) {
+        ProfileActivity.isFirst = false
+        getSharedPreferences(ProfileActivity.SHARED, Context.MODE_PRIVATE)
+            .edit()
+            .apply {
+                putBoolean(ProfileActivity.BOOLEAN_FOR_SHRED, ProfileActivity.isFirst)
+                putString(key, putString)
+            }.apply()
     }
 }

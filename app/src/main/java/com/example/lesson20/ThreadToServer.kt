@@ -45,6 +45,9 @@ class ThreadToServer(
 
     override fun onPostExecute(result: String?) {
         super.onPostExecute(result)
-        action(result)
+        if (result!=null){
+            action(result)
+        }
+
     }
 }

@@ -25,22 +25,20 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var currentBirthday: TextView
     private lateinit var currentNote: TextView
     private lateinit var logoutBtn: Button
-    private lateinit var progress: ProgressDialog
 
     private var profileThread: ProfileThreadToServer? = null
-    private val EMAIL = "email"
-    private val FIRST_NAME = "firstName"
-    private val LAST_NAME = "lastName"
-    private val BIRTH_DATE = "birthDate"
-    private val NOTE = "note"
 
     companion object {
         const val URI = "https://pub.zame-dev.org/senla-training-addition/lesson-20.php?method="
         const val SHARED = "SH"
         const val BOOLEAN_FOR_SHRED = "BOOL"
         const val THIS_TOKEN = "thisToken"
-        const val THIS_EMAIL = "thisEmail"
         var isFirst = true
+        const val EMAIL = "email"
+        const val FIRST_NAME = "firstName"
+        const val LAST_NAME = "lastName"
+        const val BIRTH_DATE = "birthDate"
+        const val NOTE = "note"
     }
 
     private val formatter = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
@@ -66,47 +64,12 @@ class ProfileActivity : AppCompatActivity() {
         currentNote.movementMethod = ScrollingMovementMethod()
         isFirst =
             getSharedPreferences(SHARED, Context.MODE_PRIVATE).getBoolean(BOOLEAN_FOR_SHRED, true)
-        if (isFirst) {
-            createProgressDialog()
-            createProfileThread()
-        } else {
-            setTextInFieldsFromSharedPref()
-        }
+        setTextInFieldsFromSharedPref()
         logoutListener()
     }
 
-    private fun createProfileThread() {
-        val okHttpClient = OkHttpClient()
-        val body = createJSON().toRequestBody()
-
-        profileThread = ProfileThreadToServer(okHttpClient, body, actionSetTextInAllFields = {
-            Handler(Looper.getMainLooper()).post {
-                currentEmail.text = intent.getStringExtra(THIS_EMAIL)
-                currentFirstName.text = it!![0]
-                currentSecondName.text = it[1]
-                currentBirthday.text = formatDate(formatter, it[2].toLong())
-                currentNote.text = it[3]
-                progress.dismiss()
-                setInShared(false)
-            }
-        })
-        profileThread?.executeOnExecutor(Executors.newFixedThreadPool(2))
-    }
-
-    private fun createJSON() = JSONObject()
-        .put("token", intent.getStringExtra(THIS_TOKEN))
-        .toString()
-
     private fun formatDate(formatter: SimpleDateFormat, millisForFormat: Long): String {
         return formatter.format(Date(millisForFormat))
-    }
-
-    private fun createProgressDialog() {
-        progress = ProgressDialog(this)
-        progress.show()
-        progress.setContentView(R.layout.progress)
-        progress.window?.setBackgroundDrawableResource(R.color.transparent)
-        progress.setCanceledOnTouchOutside(false)
     }
 
     private fun logoutListener() {

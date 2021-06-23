@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View.VISIBLE
 import android.widget.*
 import okhttp3.*
@@ -30,9 +32,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if(!getSharedPreferences(ProfileActivity.SHARED, Context.MODE_PRIVATE).getBoolean(
-                ProfileActivity.BOOLEAN_FOR_SHRED, true)
-        ){
+        if (!getSharedPreferences(ProfileActivity.SHARED, Context.MODE_PRIVATE).getBoolean(
+                ProfileActivity.BOOLEAN_FOR_SHRED, true
+            )
+        ) {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
@@ -48,6 +51,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        loginBtn.isEnabled = false
+        loginTextListenerChanged()
+        passwordTextListenerChanged()
         loginBtnListener()
     }
 
@@ -61,10 +67,10 @@ class MainActivity : AppCompatActivity() {
     private fun createClient() {
         val okHttpClient = OkHttpClient()
         val body = createJSON().toRequestBody()
-        startThread(okHttpClient,body)
+        startThread(okHttpClient, body)
     }
 
-    private fun startThread(okHttpClient: OkHttpClient, body: RequestBody){
+    private fun startThread(okHttpClient: OkHttpClient, body: RequestBody) {
         threadToServer = ThreadToServer(okHttpClient, body, action = {
             Handler(Looper.getMainLooper()).post {
                 if (it?.substring(0, 5).equals(ERROR)) {
@@ -96,5 +102,33 @@ class MainActivity : AppCompatActivity() {
         progress.setContentView(R.layout.progress)
         progress.window?.setBackgroundDrawableResource(R.color.transparent)
         progress.setCanceledOnTouchOutside(false)
+    }
+
+    private fun loginTextListenerChanged() {
+        loginText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                loginBtn.isEnabled = loginText.text.isNotEmpty() && passwordText.text.isNotEmpty()
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
+    }
+
+    private fun passwordTextListenerChanged() {
+        passwordText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                loginBtn.isEnabled = loginText.text.isNotEmpty() && passwordText.text.isNotEmpty()
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
     }
 }

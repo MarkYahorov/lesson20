@@ -3,16 +3,11 @@ package com.example.lesson20
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import android.net.wifi.WifiConfiguration.AuthAlgorithm.SHARED
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.provider.Settings.System.DATE_FORMAT
-import android.text.method.LinkMovementMethod
-import android.text.method.MovementMethod
 import android.text.method.ScrollingMovementMethod
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import okhttp3.OkHttpClient
@@ -74,6 +69,8 @@ class ProfileActivity : AppCompatActivity() {
         if (isFirst) {
             createProgressDialog()
             createProfileThread()
+        } else {
+            setTextInFieldsFromSharedPref()
         }
         logoutListener()
     }
@@ -90,7 +87,7 @@ class ProfileActivity : AppCompatActivity() {
                 currentBirthday.text = formatDate(formatter, it[2].toLong())
                 currentNote.text = it[3]
                 progress.dismiss()
-                setInShared()
+                setInShared(false)
             }
         })
         profileThread?.executeOnExecutor(Executors.newFixedThreadPool(2))
@@ -114,6 +111,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun logoutListener() {
         logoutBtn.setOnClickListener {
+            setInShared(true)
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
@@ -137,13 +135,41 @@ class ProfileActivity : AppCompatActivity() {
         currentNote.text = savedInstanceState.getString(NOTE)
     }
 
-    private fun setInShared() {
-        isFirst = false
+    private fun setInShared(outOrIn: Boolean) {
+        isFirst = outOrIn
         getSharedPreferences(SHARED, Context.MODE_PRIVATE)
             .edit()
             .apply {
                 putBoolean(BOOLEAN_FOR_SHRED, isFirst)
+                putString(EMAIL, currentEmail.text.toString())
+                putString(FIRST_NAME, currentFirstName.text.toString())
+                putString(LAST_NAME, currentSecondName.text.toString())
+                putString(BIRTH_DATE, currentBirthday.text.toString())
+                putString(NOTE, currentNote.text.toString())
             }.apply()
+    }
+
+    private fun setTextInFieldsFromSharedPref() {
+        currentEmail.text = getSharedPreferences(SHARED, Context.MODE_PRIVATE).getString(
+            EMAIL,
+            currentEmail.text.toString()
+        )
+        currentFirstName.text = getSharedPreferences(SHARED, Context.MODE_PRIVATE).getString(
+            FIRST_NAME,
+            currentFirstName.text.toString()
+        )
+        currentSecondName.text = getSharedPreferences(SHARED, Context.MODE_PRIVATE).getString(
+            LAST_NAME,
+            currentSecondName.text.toString()
+        )
+        currentBirthday.text = getSharedPreferences(SHARED, Context.MODE_PRIVATE).getString(
+            BIRTH_DATE,
+            currentBirthday.text.toString()
+        )
+        currentNote.text = getSharedPreferences(SHARED, Context.MODE_PRIVATE).getString(
+            NOTE,
+            currentNote.text.toString()
+        )
     }
 
     override fun onStop() {

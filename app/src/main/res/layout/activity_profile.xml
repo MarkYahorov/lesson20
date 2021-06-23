@@ -8,7 +8,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/email_text"
-        style="@style/all_text_in_profile_activity"
+        style="@style/text_size.all_text_in_profile_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/email"
@@ -18,7 +18,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/current_email"
-        style="@style/all_text_in_profile_activity"
+        style="@style/text_size.all_text_in_profile_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/current_first_name"
@@ -27,7 +27,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/first_name_text"
-        style="@style/all_text_in_profile_activity"
+        style="@style/text_size.all_text_in_profile_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/first_name"
@@ -37,7 +37,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/current_first_name"
-        style="@style/all_text_in_profile_activity"
+        style="@style/text_size.all_text_in_profile_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/current_last_name"
@@ -46,7 +46,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/last_name_text"
-        style="@style/all_text_in_profile_activity"
+        style="@style/text_size.all_text_in_profile_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/last_name"
@@ -56,7 +56,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/current_last_name"
-        style="@style/all_text_in_profile_activity"
+        style="@style/text_size.all_text_in_profile_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
@@ -65,7 +65,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/birthday_text"
-        style="@style/all_text_in_profile_activity"
+        style="@style/text_size.all_text_in_profile_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/birthday"
@@ -75,7 +75,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/current_birthday"
-        style="@style/all_text_in_profile_activity"
+        style="@style/text_size.all_text_in_profile_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
@@ -93,7 +93,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/note_text"
-        style="@style/all_text_in_profile_activity"
+        style="@style/text_size.all_text_in_profile_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/note"
@@ -103,7 +103,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/current_note"
-        style="@style/all_text_in_profile_activity"
+        style="@style/text_size.all_text_in_profile_activity"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/logout_btn"

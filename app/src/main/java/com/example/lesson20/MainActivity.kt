@@ -30,7 +30,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        if(!getSharedPreferences(ProfileActivity.SHARED, Context.MODE_PRIVATE).getBoolean(
+                ProfileActivity.BOOLEAN_FOR_SHRED, true)
+        ){
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
         initAll()
     }
 
@@ -72,7 +77,6 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(this, ProfileActivity::class.java)
                     intent.putExtra(ProfileActivity.THIS_TOKEN, it)
                     intent.putExtra(ProfileActivity.THIS_EMAIL, loginText.text.toString())
-                    sendInShared()
                     startActivity(intent)
                     progress.dismiss()
                 }
@@ -92,14 +96,5 @@ class MainActivity : AppCompatActivity() {
         progress.setContentView(R.layout.progress)
         progress.window?.setBackgroundDrawableResource(R.color.transparent)
         progress.setCanceledOnTouchOutside(false)
-    }
-
-    private fun sendInShared() {
-        ProfileActivity.isFirst = true
-        getSharedPreferences(ProfileActivity.SHARED, Context.MODE_PRIVATE)
-            .edit()
-            .apply {
-                putBoolean(ProfileActivity.BOOLEAN_FOR_SHRED, ProfileActivity.isFirst)
-            }.apply()
     }
 }

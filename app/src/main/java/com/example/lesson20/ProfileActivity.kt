@@ -68,10 +68,6 @@ class ProfileActivity : AppCompatActivity() {
         logoutListener()
     }
 
-    private fun formatDate(formatter: SimpleDateFormat, millisForFormat: Long): String {
-        return formatter.format(Date(millisForFormat))
-    }
-
     private fun logoutListener() {
         logoutBtn.setOnClickListener {
             setInShared(true)
